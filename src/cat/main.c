@@ -1,44 +1,40 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
 
-char* read_file(char* filename) {
-    char* buffer;
-    size_t result;
-    long size;
+/// Read the file with the given path
+char* read_file(char* file_path)
+{
+    // 1. determine the length of the file
+    // 2. allocate a buffer, with the size of the file
+    // 3. read the file
+    // 4. return the content of the file
 
-    // Open the file
-    FILE *file = fopen(filename, "r");
-    if (file == NULL) {
-        fputs("File Error", stderr);
-        exit(1);
-    }
+    FILE* file = fopen(file_path, "r");
 
-    // determine the length of the file
+    // 1. determine the length of the file
     fseek(file, 0, SEEK_END);
-    size = ftell(file);
+    long size = ftell(file) + 1; // add space for the null terminator
     rewind(file);
-    buffer = malloc(size);
 
-    // read the file
-    result = fread(buffer, 1, size, file);
-    if (result != size) {
-        fputs("Reading error 2", stderr);
-        exit(3);
-    }
+    // 2. Allicate a buffer, with the size of the file
+    char* buffer = malloc(size);
 
-    // close the file
+    // read the file contents into the buffer
+    fread(buffer, 1, size, file);
+
+    // Close the file
     fclose(file);
 
     return buffer;
 }
 
-int main(int argc, char** argv) {
-    // the filename we want to print lives in the second argument we get
-    char* filename = argv[1];
-
-    char* file_content = read_file(filename);
-
-    printf("%s\n", file_content);
+int main(int argc, char** argv)
+{
+    // Print the content of the file at the path, given in the first argument
+    // (at index 0, we get the name of outself)
+    printf("%s", read_file(argv[1]));
 
     return 0;
 }
