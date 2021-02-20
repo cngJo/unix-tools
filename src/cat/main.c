@@ -32,6 +32,13 @@ char* read_file(char* file_path)
 
 int main(int argc, char** argv)
 {
+    // Check if we got any arguments
+    // if we pass nothing to read_file, it will cause an segmentation fault
+    if (argc <= 1) {
+        printf("No arguments found!\n");
+        return 0;
+    }
+
     // Print the content of the file at the path, given in the first argument
     // (at index 0, we get the name of outself)
     printf("%s", read_file(argv[1]));
