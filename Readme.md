@@ -4,6 +4,7 @@ this is a repository, containing replicas of (some of) the unix-tools
 
 currently there are: 
 * cat
+* pwd
 
 The tools are implemented in c
 
